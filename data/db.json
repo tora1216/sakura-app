@@ -1,0 +1,18 @@
+{
+  "salesReps": [
+    { "id": "1", "name": "田中 太郎" },
+    { "id": "2", "name": "佐藤 花子" },
+    { "id": "3", "name": "鈴木 一郎" }
+  ],
+  "records": [
+    { "salesRepId": "1", "year": 2026, "month": 1, "sales": 1800000, "target": 2000000 },
+    { "salesRepId": "1", "year": 2026, "month": 2, "sales": 2200000, "target": 2000000 },
+    { "salesRepId": "1", "year": 2026, "month": 3, "sales": 1900000, "target": 2000000 },
+    { "salesRepId": "2", "year": 2026, "month": 1, "sales": 2500000, "target": 2200000 },
+    { "salesRepId": "2", "year": 2026, "month": 2, "sales": 1800000, "target": 2200000 },
+    { "salesRepId": "2", "year": 2026, "month": 3, "sales": 2100000, "target": 2200000 },
+    { "salesRepId": "3", "year": 2026, "month": 1, "sales": 1500000, "target": 1800000 },
+    { "salesRepId": "3", "year": 2026, "month": 2, "sales": 1600000, "target": 1800000 },
+    { "salesRepId": "3", "year": 2026, "month": 3, "sales": 1750000, "target": 1800000 }
+  ]
+}
