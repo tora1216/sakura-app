@@ -54,7 +54,7 @@ export default function MembersPage() {
         {/* Add member */}
         <div className="bg-white rounded-xl p-6 shadow-sm mb-6">
           <h2 className="text-lg font-semibold mb-4">新しいメンバーを追加</h2>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <input
               type="text"
               value={newName}
@@ -66,7 +66,7 @@ export default function MembersPage() {
             <button
               onClick={addRep}
               disabled={!newName.trim() || loading}
-              className="bg-brand text-white px-6 py-2 rounded-lg hover:bg-brand-dark disabled:opacity-50 font-medium transition-colors"
+              className="bg-brand text-white px-6 py-2 rounded-lg hover:bg-brand-dark disabled:opacity-50 font-medium transition-colors sm:w-auto"
             >
               追加
             </button>

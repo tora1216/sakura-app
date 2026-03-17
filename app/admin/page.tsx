@@ -77,22 +77,22 @@ export default function AdminPage() {
 
   return (
     <div className="min-h-screen bg-brand-bg">
-      <header className="bg-brand text-white px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="text-brand-pale hover:text-white text-sm">
+      <header className="bg-brand text-white px-4 sm:px-6 py-4 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2 sm:gap-4 min-w-0">
+          <Link href="/" className="text-brand-pale hover:text-white text-sm shrink-0">
             ← ホーム
           </Link>
-          <h1 className="text-xl font-bold">🌸 管理者ダッシュボード</h1>
+          <h1 className="text-base sm:text-xl font-bold truncate">🌸 管理者ダッシュボード</h1>
         </div>
         <Link
           href="/admin/members"
-          className="bg-brand-secondary hover:bg-brand-dark px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+          className="bg-brand-secondary hover:bg-brand-dark px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors shrink-0"
         >
           メンバー管理
         </Link>
       </header>
 
-      <main className="p-6 max-w-7xl mx-auto">
+      <main className="p-4 sm:p-6 max-w-7xl mx-auto">
         {/* Year selector */}
         <div className="mb-6 flex items-center gap-3">
           <span className="font-medium text-gray-700">年度:</span>
@@ -167,105 +167,107 @@ export default function AdminPage() {
               </Link>
             </div>
           ) : (
-            <table className="w-full">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="text-left px-6 py-3 text-sm text-gray-600 font-medium">
-                    担当者
-                  </th>
-                  <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
-                    年間目標
-                  </th>
-                  <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
-                    年間実績
-                  </th>
-                  <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
-                    達成率
-                  </th>
-                  <th className="px-6 py-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {repTotals.map(({ rep, repRecords, repSales, repTarget, rate }) => (
-                  <>
-                    <tr key={rep.id} className="border-t hover:bg-gray-50 transition-colors">
-                      <td className="px-6 py-4 font-medium text-gray-800">{rep.name}</td>
-                      <td className="px-6 py-4 text-right text-gray-600">
-                        {repTarget > 0 ? `¥${repTarget.toLocaleString()}` : '―'}
-                      </td>
-                      <td className="px-6 py-4 text-right text-gray-600">
-                        {repSales > 0 ? `¥${repSales.toLocaleString()}` : '―'}
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <AchievementBadge rate={rate} />
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <button
-                          onClick={() =>
-                            setExpandedRep(expandedRep === rep.id ? null : rep.id)
-                          }
-                          className="text-brand hover:text-brand-dark text-sm font-medium"
-                        >
-                          {expandedRep === rep.id ? '閉じる ▲' : '月別詳細 ▼'}
-                        </button>
-                      </td>
-                    </tr>
-
-                    {expandedRep === rep.id && (
-                      <tr key={`${rep.id}-detail`} className="border-t bg-brand-bg">
-                        <td colSpan={5} className="px-6 py-4">
-                          <div className="grid grid-cols-6 gap-2">
-                            {Array.from({ length: 12 }, (_, i) => {
-                              const m = i + 1
-                              const rec = repRecords.find((r) => r.month === m)
-                              const mRate =
-                                rec && rec.target > 0
-                                  ? (rec.sales / rec.target) * 100
-                                  : null
-                              return (
-                                <div
-                                  key={m}
-                                  className="bg-white rounded-lg p-3 text-center shadow-sm"
-                                >
-                                  <div className="text-xs text-gray-500 mb-1 font-medium">
-                                    {m}月
-                                  </div>
-                                  {rec ? (
-                                    <>
-                                      <div className="text-sm font-bold text-gray-800">
-                                        {Math.round(rec.sales / 10000)}万
-                                      </div>
-                                      <div className="text-xs text-gray-400">
-                                        目標 {Math.round(rec.target / 10000)}万
-                                      </div>
-                                      {mRate !== null && (
-                                        <div
-                                          className={`text-xs mt-1 font-semibold ${
-                                            mRate >= 100
-                                              ? 'text-green-600'
-                                              : mRate >= 80
-                                              ? 'text-yellow-600'
-                                              : 'text-red-600'
-                                          }`}
-                                        >
-                                          {mRate.toFixed(0)}%
-                                        </div>
-                                      )}
-                                    </>
-                                  ) : (
-                                    <div className="text-xs text-gray-300 mt-2">未入力</div>
-                                  )}
-                                </div>
-                              )
-                            })}
-                          </div>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th className="text-left px-6 py-3 text-sm text-gray-600 font-medium">
+                      担当者
+                    </th>
+                    <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
+                      年間目標
+                    </th>
+                    <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
+                      年間実績
+                    </th>
+                    <th className="text-right px-6 py-3 text-sm text-gray-600 font-medium">
+                      達成率
+                    </th>
+                    <th className="px-6 py-3"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {repTotals.map(({ rep, repRecords, repSales, repTarget, rate }) => (
+                    <>
+                      <tr key={rep.id} className="border-t hover:bg-gray-50 transition-colors">
+                        <td className="px-6 py-4 font-medium text-gray-800">{rep.name}</td>
+                        <td className="px-6 py-4 text-right text-gray-600">
+                          {repTarget > 0 ? `¥${repTarget.toLocaleString()}` : '―'}
+                        </td>
+                        <td className="px-6 py-4 text-right text-gray-600">
+                          {repSales > 0 ? `¥${repSales.toLocaleString()}` : '―'}
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <AchievementBadge rate={rate} />
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            onClick={() =>
+                              setExpandedRep(expandedRep === rep.id ? null : rep.id)
+                            }
+                            className="text-brand hover:text-brand-dark text-sm font-medium"
+                          >
+                            {expandedRep === rep.id ? '閉じる ▲' : '月別詳細 ▼'}
+                          </button>
                         </td>
                       </tr>
-                    )}
-                  </>
-                ))}
-              </tbody>
-            </table>
+
+                      {expandedRep === rep.id && (
+                        <tr key={`${rep.id}-detail`} className="border-t bg-brand-bg">
+                          <td colSpan={5} className="px-6 py-4">
+                            <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
+                              {Array.from({ length: 12 }, (_, i) => {
+                                const m = i + 1
+                                const rec = repRecords.find((r) => r.month === m)
+                                const mRate =
+                                  rec && rec.target > 0
+                                    ? (rec.sales / rec.target) * 100
+                                    : null
+                                return (
+                                  <div
+                                    key={m}
+                                    className="bg-white rounded-lg p-3 text-center shadow-sm"
+                                  >
+                                    <div className="text-xs text-gray-500 mb-1 font-medium">
+                                      {m}月
+                                    </div>
+                                    {rec ? (
+                                      <>
+                                        <div className="text-sm font-bold text-gray-800">
+                                          {Math.round(rec.sales / 10000)}万
+                                        </div>
+                                        <div className="text-xs text-gray-400">
+                                          目標 {Math.round(rec.target / 10000)}万
+                                        </div>
+                                        {mRate !== null && (
+                                          <div
+                                            className={`text-xs mt-1 font-semibold ${
+                                              mRate >= 100
+                                                ? 'text-green-600'
+                                                : mRate >= 80
+                                                ? 'text-yellow-600'
+                                                : 'text-red-600'
+                                            }`}
+                                          >
+                                            {mRate.toFixed(0)}%
+                                          </div>
+                                        )}
+                                      </>
+                                    ) : (
+                                      <div className="text-xs text-gray-300 mt-2">未入力</div>
+                                    )}
+                                  </div>
+                                )
+                              })}
+                            </div>
+                          </td>
+                        </tr>
+                      )}
+                    </>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           )}
         </div>
       </main>

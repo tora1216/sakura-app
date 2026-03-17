@@ -146,20 +146,20 @@ export default function SalesRepPage() {
         </div>
 
         {/* Summary cards */}
-        <div className="grid grid-cols-3 gap-4 mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-sm">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
+          <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
             <div className="text-sm text-gray-500">年間実績</div>
             <div className="text-xl font-bold text-gray-800">
               {Math.round(totalSales / 10000)}万円
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
+          <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
             <div className="text-sm text-gray-500">年間目標</div>
             <div className="text-xl font-bold text-gray-800">
               {Math.round(totalTarget / 10000)}万円
             </div>
           </div>
-          <div className="bg-white rounded-xl p-4 shadow-sm">
+          <div className="bg-white rounded-xl p-3 sm:p-4 shadow-sm">
             <div className="text-sm text-gray-500">年間達成率</div>
             <div
               className={`text-xl font-bold ${

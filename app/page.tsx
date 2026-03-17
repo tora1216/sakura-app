@@ -9,7 +9,7 @@ export default function Home() {
         <p className="text-gray-500 text-lg">営業成績・目標管理システム</p>
       </div>
 
-      <div className="flex gap-6">
+      <div className="flex flex-col sm:flex-row gap-6 w-full px-4 sm:px-0 sm:w-auto">
         <Link
           href="/admin"
           className="bg-brand hover:bg-brand-dark text-white rounded-2xl px-10 py-8 text-center shadow-lg transition-all hover:scale-105"
