@@ -153,6 +153,56 @@ export default function AdminPage() {
           <MonthlyChart data={monthlyData} />
         </div>
 
+        {/* Ranking */}
+        {repTotals.length > 0 && (
+          <div className="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
+            <div className="px-6 py-4 border-b">
+              <h2 className="text-lg font-semibold text-gray-700">🏆 担当者ランキング（{year}年）</h2>
+            </div>
+            <div className="divide-y">
+              {[...repTotals]
+                .sort((a, b) => (b.rate ?? -1) - (a.rate ?? -1))
+                .map(({ rep, repSales, repTarget, rate }, idx) => {
+                  const medal = idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : null
+                  const barColor =
+                    rate === null ? 'bg-gray-200'
+                    : rate >= 100 ? 'bg-green-500'
+                    : rate >= 80 ? 'bg-yellow-400'
+                    : 'bg-red-400'
+                  return (
+                    <div key={rep.id} className="px-6 py-4 flex items-center gap-4">
+                      <div className="w-8 text-center text-lg font-bold text-gray-400 shrink-0">
+                        {medal ?? `${idx + 1}`}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="font-medium text-gray-800 truncate">{rep.name}</span>
+                          <span className={`text-sm font-bold ml-2 shrink-0 ${
+                            rate === null ? 'text-gray-400'
+                            : rate >= 100 ? 'text-green-600'
+                            : rate >= 80 ? 'text-yellow-600'
+                            : 'text-red-600'
+                          }`}>
+                            {rate !== null ? `${rate.toFixed(1)}%` : '―'}
+                          </span>
+                        </div>
+                        <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                          <div
+                            className={`h-2 rounded-full ${barColor}`}
+                            style={{ width: `${Math.min(100, rate ?? 0)}%` }}
+                          />
+                        </div>
+                        <div className="text-xs text-gray-400 mt-1">
+                          実績 {Math.round(repSales / 10000)}万 ／ 目標 {repTarget > 0 ? `${Math.round(repTarget / 10000)}万` : '未設定'}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+            </div>
+          </div>
+        )}
+
         {/* Per-rep table */}
         <div className="bg-white rounded-xl shadow-sm overflow-hidden">
           <div className="px-6 py-4 border-b">

@@ -99,6 +99,14 @@ export default function SalesRepPage() {
   const totalTarget = records.reduce((sum, r) => sum + r.target, 0)
   const yearRate = totalTarget > 0 ? (totalSales / totalTarget) * 100 : null
 
+  const currentMonthRec = year === currentYear ? records.find((r) => r.month === currentMonth) : null
+  const currentMonthRemaining = currentMonthRec
+    ? Math.max(0, currentMonthRec.target - currentMonthRec.sales)
+    : null
+  const currentMonthRate = currentMonthRec && currentMonthRec.target > 0
+    ? (currentMonthRec.sales / currentMonthRec.target) * 100
+    : null
+
   const monthlyData = Array.from({ length: 12 }, (_, i) => {
     const m = i + 1
     const rec = records.find((r) => r.month === m)
@@ -144,6 +152,50 @@ export default function SalesRepPage() {
             ))}
           </select>
         </div>
+
+        {/* Current month progress banner */}
+        {year === currentYear && currentMonthRec && (
+          <div className={`rounded-xl p-5 mb-6 shadow-sm ${
+            currentMonthRate !== null && currentMonthRate >= 100
+              ? 'bg-green-50 border border-green-200'
+              : 'bg-white border border-brand-border'
+          }`}>
+            <div className="flex items-center justify-between mb-3">
+              <div className="font-semibold text-gray-700">
+                {currentMonth}月の進捗
+              </div>
+              {currentMonthRate !== null && currentMonthRate >= 100 ? (
+                <span className="text-green-600 font-bold text-sm">🎉 目標達成！</span>
+              ) : currentMonthRemaining !== null && currentMonthRemaining > 0 ? (
+                <span className="text-brand font-bold text-sm">
+                  あと {Math.round(currentMonthRemaining / 10000)}万円で達成
+                </span>
+              ) : null}
+            </div>
+            <div className="w-full bg-gray-100 rounded-full h-3 mb-2 overflow-hidden">
+              <div
+                className={`h-3 rounded-full transition-all ${
+                  currentMonthRate !== null && currentMonthRate >= 100
+                    ? 'bg-green-500'
+                    : currentMonthRate !== null && currentMonthRate >= 80
+                    ? 'bg-yellow-400'
+                    : 'bg-brand'
+                }`}
+                style={{ width: `${Math.min(100, currentMonthRate ?? 0)}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>実績 {Math.round(currentMonthRec.sales / 10000)}万円</span>
+              <span>{currentMonthRate !== null ? `${currentMonthRate.toFixed(1)}%` : '―'}</span>
+              <span>目標 {Math.round(currentMonthRec.target / 10000)}万円</span>
+            </div>
+          </div>
+        )}
+        {year === currentYear && !currentMonthRec && (
+          <div className="rounded-xl p-4 mb-6 bg-yellow-50 border border-yellow-200 text-sm text-yellow-700">
+            ⚠️ {currentMonth}月のデータがまだ入力されていません
+          </div>
+        )}
 
         {/* Summary cards */}
         <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6">
